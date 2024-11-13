@@ -1,9 +1,12 @@
+#Whack-A-Mole game full functionality
+
 import pygame
+from random import randrange
 
-#Testing git push using command line
+from pygame import MOUSEBUTTONDOWN
 
-screen = pygame.display.set_mode((640, 512))
 
+screen = pygame.display.set_mode((640, 512)) #Defined screen here so I could reference it in the draw_grid function
 
 def draw_grid():
     #Vertical lines
@@ -24,30 +27,51 @@ def draw_grid():
             (640, i * 32),
         )
 
+def random_x():
+    return randrange(0, 21) #Random column number (exclusive end-point)
+
+def random_y():
+    return randrange(0, 17) #Random row number (exclusive end-point)
+
 
 def main():
     try:
+        temp_x = random_x() #Placeholder x-value
+        temp_y = random_y() #Placeholder y-value
+
         pygame.init()
-        # You can draw the mole with this snippet:
-        # screen.blit(mole_image, mole_image.get_rect(topleft=(x,y)))
         mole_image = pygame.image.load("mole.png")
+
         screen
         clock = pygame.time.Clock()
         running = True
 
-
         while running:
+
+            screen.fill(color=(15, 185, 220))
+            draw_grid()
+
+            screen.blit(mole_image,
+                        mole_image.get_rect(topleft=(temp_x * 32, temp_y * 32)))
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-            screen.fill(color = (15, 185, 220))
-            draw_grid()
+                elif event.type == MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    x //= 32
+                    y //= 32
+
+                    if x == temp_x and y == temp_y:
+                        temp_x = random_x()
+                        temp_y = random_y()
+
+                        screen.blit(mole_image,
+                                    mole_image.get_rect(topleft=(temp_x * 32, temp_y * 32)))
+
             pygame.display.flip()
 
-
             clock.tick(60)
-
 
     finally:
         pygame.quit()
