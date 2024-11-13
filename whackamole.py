@@ -6,7 +6,7 @@ from random import randrange
 from pygame import MOUSEBUTTONDOWN
 
 
-screen = pygame.display.set_mode((640, 512)) #Defined screen here so i could reference it in the draw_grid function
+screen = pygame.display.set_mode((640, 512)) #Defined screen here so I could reference it in the draw_grid function
 
 def draw_grid():
     #Vertical lines
@@ -34,8 +34,10 @@ def random_y():
     return randrange(0, 16) #Random row number
 
 
+
 def main():
     try:
+
         temp_x = random_x() #Placeholder x-value
         temp_y = random_y() #Placeholder y-value
 
@@ -68,7 +70,6 @@ def main():
 
                         screen.blit(mole_image,
                                     mole_image.get_rect(topleft=(temp_x * 32, temp_y * 32)))
-                        print((temp_x, temp_y))
 
             pygame.display.flip()
 
